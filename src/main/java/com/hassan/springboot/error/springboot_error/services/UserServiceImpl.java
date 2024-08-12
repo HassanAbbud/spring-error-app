@@ -1,9 +1,9 @@
 package com.hassan.springboot.error.springboot_error.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +13,8 @@ import com.hassan.springboot.error.springboot_error.models.domain.User;
 @Primary
 public class UserServiceImpl implements UserService{
 
+    @Autowired
     private List<User> users;
-    
-
-    public UserServiceImpl() {
-        users = new ArrayList<>();
-        users.add(new User(1L, "Jose", "Loya"));
-        users.add(new User(2L, "Andres", "Manuel"));
-        users.add(new User(3L, "Camila", "Gonzalez"));
-        users.add(new User(4L, "Snatiago", "Arzaga"));
-        users.add(new User(5L, "Alex", "Piña"));
-    }
 
     @Override
     public List<User> findAll() {
@@ -32,12 +23,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Optional<User> findById(Long id) {
-        for (User user : users) {
-            if (user.getId().equals(id)) {
-                return Optional.ofNullable(user);
-            }
-        }
-        return null;
+        return users.stream().filter(urs -> urs.getId().equals(id)).findFirst();
+        // for (User user : users) {
+        //     if (user.getId().equals(id)) {
+        //         return Optional.ofNullable(user);
+        //     }
+        // }
+        // return null;
     }
 
 }

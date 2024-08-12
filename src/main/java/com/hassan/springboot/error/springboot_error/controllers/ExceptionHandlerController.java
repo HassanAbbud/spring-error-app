@@ -6,11 +6,13 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.hassan.springboot.error.springboot_error.exceptions.UserNotFoundException;
 import com.hassan.springboot.error.springboot_error.models.ErrorDTO;
 
 @RestControllerAdvice
@@ -44,6 +46,21 @@ public class ExceptionHandlerController {
         Map<String, Object> error = new HashMap<>();
         error.put("date", new Date().toString());
         error.put("error", "Invalid number, number must have a digit format");
+        error.put("Message", ex.getMessage());
+        error.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+
+        return error;
+    }
+    
+    @ExceptionHandler({NullPointerException.class, 
+        HttpMessageNotWritableException.class, 
+        UserNotFoundException.class
+    })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, Object> userNotFoundException(Exception ex){
+        Map<String, Object> error = new HashMap<>();
+        error.put("date", new Date().toString());
+        error.put("error", "User or user role was not found!");
         error.put("Message", ex.getMessage());
         error.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
 

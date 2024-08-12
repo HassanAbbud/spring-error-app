@@ -2,6 +2,7 @@ package com.hassan.springboot.error.springboot_error.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hassan.springboot.error.springboot_error.exceptions.UserNotFoundException;
 import com.hassan.springboot.error.springboot_error.models.domain.User;
 import com.hassan.springboot.error.springboot_error.services.UserService;
 
@@ -29,6 +30,9 @@ public class AppController {
     @GetMapping("/show/{id}")
     public User showUser(@PathVariable Long id) {
         User user = userService.findById(id);
+        if(user == null){
+            throw new UserNotFoundException("Error user not found");
+        }
         System.out.println(user.getLastName());
         return user;
     }

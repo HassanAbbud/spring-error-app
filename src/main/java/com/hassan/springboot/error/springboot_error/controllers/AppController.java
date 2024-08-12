@@ -29,10 +29,7 @@ public class AppController {
 
     @GetMapping("/show/{id}")
     public User showUser(@PathVariable Long id) {
-        User user = userService.findById(id);
-        if(user == null){
-            throw new UserNotFoundException("Error user not found");
-        }
+        User user = userService.findById(id).orElseThrow(() -> new UserNotFoundException("Error user not found"));
         System.out.println(user.getLastName());
         return user;
     }

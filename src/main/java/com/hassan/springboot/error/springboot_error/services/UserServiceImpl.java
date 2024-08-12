@@ -2,6 +2,7 @@ package com.hassan.springboot.error.springboot_error.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -30,10 +31,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         for (User user : users) {
             if (user.getId().equals(id)) {
-                return user;
+                return Optional.ofNullable(user);
             }
         }
         return null;

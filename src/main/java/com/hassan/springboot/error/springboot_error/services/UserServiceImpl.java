@@ -3,11 +3,13 @@ package com.hassan.springboot.error.springboot_error.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.hassan.springboot.error.springboot_error.models.domain.User;
 
 @Service
+@Primary
 public class UserServiceImpl implements UserService{
 
     private List<User> users;

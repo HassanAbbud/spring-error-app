@@ -28,7 +28,9 @@ public class AppController {
 
     @GetMapping("/show/{id}")
     public User showUser(@PathVariable Long id) {
-        return userService.findById(id);
+        User user = userService.findById(id);
+        System.out.println(user.getLastName());
+        return user;
     }
 
 }
